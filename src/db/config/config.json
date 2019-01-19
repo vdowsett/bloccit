@@ -16,8 +16,9 @@
   "production": {
     "username": "postgres",
     "password": null,
-    "database": "bloccit-test",
+    "database": "DATABASE_URL",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "use_env_variable": "DATABASE_URL"
   }
 }
