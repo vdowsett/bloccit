@@ -10,20 +10,20 @@ describe("Topic", () => {
     this.post;
     sequelize.sync({force: true}).then((res) => {
 
-
       Topic.create({
         title: "This is a Japanese doll.",
-        description: "We need to rent a room for our party."
+        description: "We need to rent a room for our party.",
       })
       .then((topic) => {
         this.topic = topic;
 
-        Post.create({
-          title: "How was the math test?",
-          body: "The old apple revels in its authority.",
-
-          topicId: this.topic.id
-        })
+        Post.create(
+          {
+            title: "How was the math test?",
+            body: "The old apple revels in its authority.",
+            topicId: topic.id
+          }
+        )
         .then((post) => {
           this.post = post;
           done();
@@ -85,8 +85,16 @@ describe("Topic", () => {
 
     it("should return array of posts within topic in scope", (done) => {
 
-      console.log("balls");
-      done();
+      this.topic.getPosts()     //returns an array of Sequelize Model instances
+      .then((posts) => {
+        expect(posts[0].topicId).toBe(this.topic.id);
+        done();
+      })
+      .catch((err) => {
+        console.log(this.topic.posts);
+        console.log(err);
+        done();
+      })
 
     })
   })
