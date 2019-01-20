@@ -9,7 +9,7 @@ module.exports = {
        } else {
          res.render(
            "topics/index", 
-           { title: "About Us",
+           { title: "Topics",
              topics
             });
        }
