@@ -41,15 +41,53 @@ describe("routes : advertisements", () => {
         });
     });
 
-    describe("GET /advertisements/new", () => {
+    describe("GET /advertisement/new", () => {
+        it("should render a new advertisement form", (done) => {
+          request.get(`${base}new`, (err, res, body) => {
+          expect(err).toBeNull();
+          expect(body).toContain("New Advertisement");
+          done();
+        });
+       });
+     });
 
-        it("should return a new advertisement form for advertisements", (done) => {
-            
-            request.get(`${base}new`, (err, res, body) => {
-                expect(err).toBeNull();
-                expect(body).toContain("New Advertisement");
+    describe("POST /advertisements/create", () => {
+        const options = {
+          url: `${base}create`,
+          form: {
+            title: "Morath",
+            description: "The attempt logs the ink."
+          }
+        };
+  
+        it("should create a new advertisement and redirect", (done) => {
+  
+          request.post(options,
+  
+            (err, res, body) => {
+              Advertisement.findOne({where: {title: "Morath"}})
+              .then((advertisement) => {
+                expect(res.statusCode).toBe(303);
+                expect(advertisement.title).toBe("Morath");
+                expect(advertisement.description).toBe("The attempt logs the ink.");
+                done();
+              })
+              .catch((err) => {
+                console.log(err);
                 done();
               });
+            }
+          );
+        });
+      });
+
+    describe("GET /advertisements/:id", () => {
+    it("should render a view with the selected advertisement", (done) => {
+        request.get(`${base}${this.advertisement.id}`, (err, res, body) => {
+        expect(err).toBeNull();
+        expect(body).toContain("Show me the money!");
+        done();
         });
     });
+    });  
 });
