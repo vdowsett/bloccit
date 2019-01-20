@@ -81,6 +81,16 @@ describe("Topic", () => {
 
   });
 
-  
+  describe("#getPost()", () => {
+
+    //1. find topic in scope
+
+    //2. create post and associate with topic in scope
+
+    //3. create getPost method that reruns array of post objects associated with the topic method it was called on
+
+    //4. expect associated post created in step 1 is returned
+    
+  })
   
 });
