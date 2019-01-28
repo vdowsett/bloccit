@@ -40,14 +40,25 @@ describe("routes : posts", () => {
 
   });
 
+  describe("return this.topic and this.post", () => {
+
+    it("should console log the topic and post created", (done) => {
+      console.log("balls topic:" + this.topic.id);
+      console.log("balls post:" + this.post.topicId);
+      done();
+      });
+      
+    });
+
   describe("GET /topics/:topicId/posts/new", () => {
 
     it("should render a new post form", (done) => {
-      request.get(`${base}/${topic.id}/posts/new`, (err, res, body) => {
+      request.get(`${base}/${this.topic.id}/posts/new`, (err, res, body) => {
         expect(err).toBeNull();
         expect(body).toContain("New Post");
         done();
       });
+      done();
     });
 
   });
