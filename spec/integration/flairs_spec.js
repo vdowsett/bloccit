@@ -65,10 +65,8 @@ describe("routes : flairs", () => {
   
         it("should create a new flair and redirect", (done) => {
   
-  //#1
           request.post(options,
   
-  //#2
             (err, res, body) => {
               Flair.findOne({where: {name: "Yada Yada"}})
               .then((flair) => {
@@ -85,5 +83,18 @@ describe("routes : flairs", () => {
           );
         });
     });
+
+    describe("GET /flairs/:id", () => {
+
+        it("should render a view with the selected flair", (done) => {
+          request.get(`${base}${this.flair.id}`, (err, res, body) => {
+              console.log("balls: " + this.flair.id )
+            expect(err).toBeNull();
+            expect(body).toContain("Greased Lightning");
+            done();
+          });
+        });
+   
+      });
 
 });
