@@ -55,6 +55,28 @@ module.exports = {
             res.redirect(303, "/flairs")
           }
         });
-      }
+    },
+
+    edit(req, res, next){
+        flairQueries.getFlair(req.params.id, (err, flair) => {
+          if(err || flair == null){
+            res.redirect(404, "/");
+          } else {
+            res.render("flairs/edit", {flair});
+          }
+        });
+    },
+
+    update(req, res, next){
+
+        flairQueries.updateFlair(req.params.id, req.body, (err, flair) => {
+
+        if(err || flair == null){
+            res.redirect(404, `/flairs/${req.params.id}/edit`);
+        } else {
+            res.redirect(`/flairs/${flair.id}`);
+        }
+        });
+    }
 
 }
