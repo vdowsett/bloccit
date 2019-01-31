@@ -70,13 +70,19 @@ module.exports = {
   },
 
   updateTopic(req, updatedTopic, callback){
+
     return Topic.findById(req.params.id)
+
     .then((topic) => {
+
       if(!topic){
         return callback("Topic not found");
       }
+
       const authorized = new Authorizer(req.user, topic).update();
+
       if(authorized) {
+        
         topic.update(updatedTopic, {
           fields: Object.keys(updatedTopic)
         })
