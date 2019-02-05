@@ -3,7 +3,7 @@ const Comment = require("./models").Comment;
 const Post = require("./models").Post;
 const User = require("./models").User;
 
-const Authorizer = require("../policies/comment");
+const Authorizer = require("../policies/application");
 
 module.exports = {
 

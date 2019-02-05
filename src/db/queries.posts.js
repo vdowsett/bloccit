@@ -25,6 +25,12 @@ module.exports = {
         ]}
       ]
     })
+    .then((post) => {
+      callback(null, post);
+    })
+    .catch((err) => {
+      callback(err);
+    })
   },
 
   deletePost(req, callback) {

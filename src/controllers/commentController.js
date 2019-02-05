@@ -1,6 +1,7 @@
 // #1
 const commentQueries = require("../db/queries.comments.js");
-const Authorizer = require("../policies/comment.js");
+
+const Authorizer = require("../policies/application");
 
 module.exports = {
   create(req, res, next){
