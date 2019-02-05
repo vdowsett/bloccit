@@ -9,8 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       body: {
-        allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -21,25 +21,25 @@ module.exports = {
         type: Sequelize.DATE
       },
       postId: {
-        allowNull: false,
+        type: Sequelize.INTEGER,
         onDelete: "CASCADE",
+        allowNull: false,
         references: {
           model: "Posts",
           key: "id",
           as: "postId"
-        },
-        type: Sequelize.INTEGER
+        }
       },
       userId: {
-        allowNull: false,
+        type: Sequelize.INTEGER,
         onDelete: "CASCADE",
+        allowNull: false,
         references: {
           model: "Users",
           key: "id",
           as: "userId"
-        },
-        type: Sequelize.INTEGER
-      }
+        }
+      },
     });
   },
   down: (queryInterface, Sequelize) => {

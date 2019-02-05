@@ -2,29 +2,29 @@
 module.exports = (sequelize, DataTypes) => {
   var Comment = sequelize.define('Comment', {
     body: {
-      allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false
     },
     postId: {
-      allowNull: false,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
     userId: {
-      allowNull: false,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   }, {});
   Comment.associate = function(models) {
     
     Comment.belongsTo(models.Post, {
-       foreignKey: "postId",
-       onDelete: "CASCADE"
-     });
+      foreignKey: "postId",
+      onDelete: "CASCADE"
+    });
 
-     Comment.belongsTo(models.User, {
-       foreignKey: "userId",
-       onDelete: "CASCADE"
-     });
+    Comment.belongsTo(models.User, {
+      foreignKey: "userId",
+      onDelete: "CASCADE"
+    });
 
    };
   return Comment;

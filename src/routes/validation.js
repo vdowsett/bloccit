@@ -59,7 +59,7 @@ module.exports = {
 
     validateComments(req, res, next) {
       if(req.method === "POST") {
-        req.checkBody("body", "must not be empty").notEmpty();
+        req.checkBody("body", "must not be empty"). notEmpty(); //why a space here?
       }
  
       const errors = req.validationErrors();
@@ -70,6 +70,6 @@ module.exports = {
       } else {
         return next()
       }
-    }
+    },
 
   }
