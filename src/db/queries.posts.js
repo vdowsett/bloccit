@@ -3,6 +3,7 @@ const Post = require("./models").Post;
 const Comment = require("./models").Comment;
 const User = require("./models").User;
 const Vote = require("./models").Vote;
+const Favorite = require("./models").Favorite;
 
 const Authorizer = require("../policies/application");
 
@@ -29,6 +30,10 @@ module.exports = {
         { 
           model: Vote,
           as: "votes"
+        },
+        {
+          model: Favorite,
+          as: "favorites"
         }
       ]
     })
