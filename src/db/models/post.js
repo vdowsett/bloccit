@@ -1,5 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
+  
   var Post = sequelize.define('Post', {
     
     title: {
@@ -21,7 +22,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }
 
-  }, {});
+  }, {
+    scopes: {}
+  });
 
   Post.associate = function(models) {
     
@@ -64,6 +67,16 @@ module.exports = (sequelize, DataTypes) => {
         postId: post.id
       });
     });
+
+    Post.addScope("lastFiveFor", (userId) => {
+    
+      return {
+        where: { userId: userId},
+        limit: 5,
+        order: [["createdAt", "DESC"]]
+      }
+  
+    });
     
   };
 
@@ -80,8 +93,6 @@ module.exports = (sequelize, DataTypes) => {
   Post.prototype.getFavoriteFor = function(userId){
     return this.favorites.find((favorite) => { return favorite.userId == userId });
   };
-
-  
 
   return Post;
 };
