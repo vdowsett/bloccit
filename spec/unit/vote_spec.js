@@ -129,6 +129,29 @@ describe("Vote", () => {
         })
     });
 
+    it("should not create a vote with a value other than 1 or -1", (done) => {
+
+        Vote.create({
+            value: 2,
+            postId: this.post.id,
+            userId: this.user.id
+        })
+        .then((vote) => {
+
+        // the code in this block will not be evaluated since the validation error
+        // will skip it. Instead, we'll catch the error in the catch block below
+        // and set the expectations there
+
+        done();
+
+        })
+        .catch((err) => {
+
+        expect(err.message).toContain("value failed");
+        done();
+
+        })
+    });
   });
 
   describe("#setUser()", () => {
@@ -142,6 +165,7 @@ describe("Vote", () => {
        })
        .then((vote) => {
          this.vote = vote;     // store it
+         
          expect(vote.userId).toBe(this.user.id); //confirm it was created for this.user
 
          User.create({                 // create a new user
@@ -228,7 +252,7 @@ describe("Vote", () => {
       });
     });
 
-  });
+   });
 
   describe("#getPost()", () => {
 
@@ -251,6 +275,88 @@ describe("Vote", () => {
       });
     });
 
+  });
+
+  describe("#getPoints()", () => {
+    it("should return 0 if there are no votes", (done) => {
+      Post.create({
+        title: "Post Title",
+        body: "Posting is fun!",
+        topicId: this.topic.id,
+        userId: this.user.id,
+        votes: []
+      }, {
+        include: {
+          model: Vote,
+          as: "votes"
+        }
+      })
+      .then((post) => {
+        expect(post.getPoints()).toBe(0);
+        done();
+      })
+      .catch((err) => {
+        console.log(err);
+        done();
+      })
+    });
+
+  });
+
+  describe("#hasUpvotefor()", () => {
+    it("should return true if the user has upvoted", (done) => {
+      Post.create({
+        title: "Post Title",
+        body: "Posting is fun!",
+        topicId: this.topic.id,
+        userId: this.user.id,
+        votes: [{
+          value: 1,
+          userId: this.user.id
+        }]
+      }, {
+        include: {
+          model: Vote,
+          as: "votes"
+        }
+      })
+      .then((post) => {
+        expect(post.hasUpvoteFor(this.user.id)).toContain(true);
+        done();
+      })
+      .catch((err) => {
+        console.log(err);
+        done();
+      })
+    });
+  });
+
+  describe("#hasDownvotefor()", () => {
+    it("should return true if the user has downvoted", (done) => {
+      Post.create({
+        title: "Post Title",
+        body: "Posting is fun!",
+        topicId: this.topic.id,
+        userId: this.user.id,
+        votes: [{
+          value: -1,
+          userId: this.user.id
+        }]
+      }, {
+        include: {
+          model: Vote,
+          as: "votes"
+        }
+      })
+      .then((post) => {
+        expect(post.hasDownvoteFor(this.user.id)).toContain(true);
+        done();
+      })
+      .catch((err) => {
+        console.log(err);
+        done();
+      })
+    });
   });
 
 });
